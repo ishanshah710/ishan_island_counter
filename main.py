@@ -84,4 +84,5 @@ def main():
         print(f"An error occurred: {e}")
         sys.exit(1)
 
-main()
+if __name__ == "__main__":
+    main()

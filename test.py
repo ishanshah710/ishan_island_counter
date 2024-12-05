@@ -43,3 +43,8 @@ def test_complex_islands():
         [1, 1, 1, 0]
     ]
     assert count_islands(grid) == 2
+
+
+def test_very_large_island():
+    grid = [[1]*(10**3) for row in range(10**2)]
+    assert count_islands(grid) == 1
