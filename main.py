@@ -7,13 +7,25 @@ DIRECTIONS = [
     (-1, -1), (-1, 1), (1, -1), (1, 1) 
 ]
 
-def read_grid_from_file(file_path):
+def validate_grid(grid):
+    if not grid or not all(isinstance(row, list) for row in grid):
+        raise ValueError("Grid elements must be list.")
+    row_length = len(grid[0])
+    
+    if not all(len(row) == row_length for row in grid):
+        raise ValueError("All grid rows must have the same length.")
+    
+    if not all(cell in (0, 1) for row in grid for cell in row):
+        raise ValueError("Grid can only contain 0s and 1s.")
+
+
+def read_grid_and_validate(file_path):
     try:
         with open(file_path, "r") as file:
             grid = [
                 list(map(int, line.strip().split())) for line in file
             ]
-        
+        validate_grid(grid)
         return grid
     except FileNotFoundError:
         print(f"File not found: {file_path}")
@@ -65,7 +77,7 @@ def main():
             sys.exit(1)
 
         input_file_path = sys.argv[1]
-        grid = read_grid_from_file(input_file_path)
+        grid = read_grid_and_validate(input_file_path)
         result = count_islands(grid)
         print(result)
     except Exception as e:
