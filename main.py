@@ -7,6 +7,21 @@ DIRECTIONS = [
     (-1, -1), (-1, 1), (1, -1), (1, 1) 
 ]
 
+def read_grid_from_file(file_path):
+    try:
+        with open(file_path, "r") as file:
+            grid = [
+                list(map(int, line.strip().split())) for line in file
+            ]
+        
+        return grid
+    except FileNotFoundError:
+        print(f"File not found: {file_path}")
+        sys.exit(1)
+    except ValueError:
+        print("Invalid file data: Ensure file only has 0s and 1s.")
+        sys.exit(1)
+
 
 def bfs(grid, start_row, start_col, rows, cols, visited):
     queue = deque([(start_row, start_col)])
@@ -45,15 +60,12 @@ def count_islands(grid):
 
 def main():
     try:
-        grid = [
-            [0, 0, 0, 0, 0],
-            [0, 1, 0, 0, 1],
-            [1, 0, 0, 1, 1],
-            [0, 0, 1, 0, 0],
-            [1, 0, 0, 0, 0],
-            [1, 1, 0, 0, 0],
-            [0, 0, 0, 0, 1]
-        ]
+        if len(sys.argv) != 2:
+            print("Usage: python3 main.py <path_to_file>", file=sys.stderr)
+            sys.exit(1)
+
+        input_file_path = sys.argv[1]
+        grid = read_grid_from_file(input_file_path)
         result = count_islands(grid)
         print(result)
     except Exception as e:
