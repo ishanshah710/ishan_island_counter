@@ -15,8 +15,8 @@ def read_grid_and_validate(file_path):
         validate_grid(grid)
         return grid
     except FileNotFoundError:
-        print(f"File not found: {file_path}")
+        print(f"File not found: {file_path}", file=sys.stderr)
         sys.exit(1)
     except ValueError:
-        print("Invalid file data: Ensure file only has 0s and 1s.")
+        print("Invalid file data: Ensure file only has 0s and 1s.", file=sys.stderr)
         sys.exit(1)

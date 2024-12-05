@@ -30,19 +30,19 @@ def count_islands(grid):
     return island_count
 
 
-def main():
+def main(file_path):
     try:
-        if len(sys.argv) != 2:
-            print("Usage: python3 main.py <path_to_file>", file=sys.stderr)
-            sys.exit(1)
-
-        input_file_path = sys.argv[1]
-        grid = read_grid_and_validate(input_file_path)
+        grid = read_grid_and_validate(file_path)
         result = count_islands(grid)
         print(result)
     except Exception as e:
-        print(f"An error occurred: {e}")
+        print(f"An error occurred: {e}", file=sys.stderr)
         sys.exit(1)
 
 if __name__ == "__main__":
-    main()
+    if len(sys.argv) != 2:
+        print("Usage: python3 main.py <path_to_file>", file=sys.stderr)
+        sys.exit(1)
+
+    input_file_path = sys.argv[1]
+    main(input_file_path)
